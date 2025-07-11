@@ -8,9 +8,12 @@
 # include "../lib/libft/libft.h"
 
 # include "md5.h"
+# include "sha256.h"
 
 # define true 0
 # define false 1
+
+# define ERROR_FATAL -1
 
 # ifndef BONUS
     # define MAX_COMMANDS 2
@@ -33,8 +36,13 @@ typedef struct s_ssl {
 
 extern t_ssl *ssl;
 
-void    fatal_error(char *msg);
-void    initialize_commands();
+int    parse_commands(int argc, char **argv);
+
+t_ssl_command   *get_command_by_name(char *name);
+
+int    fatal_error(char *msg);
+int    fatal_print_help(char *msg);
+int    initialize_commands();
 
 void    clean_exit();
 

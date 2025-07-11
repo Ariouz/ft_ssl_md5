@@ -19,7 +19,22 @@ void clean_exit() {
     free_exit();
 }
 
-void fatal_error(char *msg) {
+int fatal_error(char *msg) {
     ft_printf("ERROR: %s\n", msg);
     clean_exit();
+    return ERROR_FATAL;
+}
+
+int fatal_print_help(char *msg) {
+    ft_printf("ERROR: %s\n", msg);
+
+    ft_printf("\nCommands:\n");
+    size_t  index = 0;
+    while (index < ssl->commands_count) {
+        t_ssl_command *command = ssl->commands[index];
+        ft_printf("%s: %s\n", command->name, command->description);
+        index++;
+    }
+    clean_exit();
+    return ERROR_FATAL;
 }

@@ -1,8 +1,11 @@
 SRCS= $(addprefix srcs/, \
 	ft_ssl.c \
 	command/command_initializer.c \
+	command/command_parser.c \
 	utils/error_handler.c \
+	utils/command_utils.c \
 	hash/md5/md5.c \
+	hash/sha256/sha256.c \
 	)
 OBJS= $(SRCS:.c=.o)
 

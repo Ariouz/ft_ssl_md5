@@ -2,16 +2,17 @@
 
 t_ssl   *ssl = NULL;
 
-void init_ssl() {
+int init_ssl() {
     ssl = (t_ssl *) malloc(sizeof(t_ssl));
-    if (!ssl) fatal_error("Failed to allocate t_ssl");
+    if (!ssl) return fatal_error("Failed to allocate t_ssl");
 
-    initialize_commands();
+    return initialize_commands();
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    init_ssl();
+    if (init_ssl() == ERROR_FATAL) return 1;
+    if (parse_commands(argc, argv) == ERROR_FATAL) return 1;
 
     clean_exit();
     return (0);
