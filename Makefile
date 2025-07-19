@@ -2,6 +2,9 @@ SRCS= $(addprefix srcs/, \
 	ft_ssl.c \
 	command/command_initializer.c \
 	command/command_parser.c \
+	flags/flag_initializer.c \
+	flags/file_reader.c \
+	flags/flag_printer.c \
 	utils/error_handler.c \
 	utils/command_utils.c \
 	hash/md5/md5.c \

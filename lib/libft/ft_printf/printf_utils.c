@@ -6,7 +6,7 @@
 /*   By: vicalvez <vicalvez@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:33:33 by vicalvez          #+#    #+#             */
-/*   Updated: 2024/01/14 17:18:26 by vicalvez         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:02:52 by vicalvez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@ int	ft_has_flag(char *flags, char c)
 	return (ft_strchr(flags, c) != NULL);
 }
 
-int	ft_get_fmw(char *flags, char type)
+int ft_get_fmw(char *flags, char type)
 {
-	int	fmw;
-	int	i;
+    int fmw;
+    int i;
 
-	i = 0;
-	while (flags[i])
-	{
-		if (ft_isdigit(flags[i]) && (flags[i - 1] != '.' || type == 'd'))
-			break ;
-		i++;
-	}
-	fmw = ft_atoi(flags + i);
-	return (fmw);
+    i = 0;
+    while (flags[i])
+    {
+        if (ft_isdigit(flags[i]) && (i == 0 || flags[i - 1] != '.' || type == 'd'))
+            break;
+        i++;
+    }
+    fmw = ft_atoi(flags + i);
+    return (fmw);
 }

@@ -1,5 +1,22 @@
 # include "ft_ssl.h"
 
+void free_inputs() {
+    t_list *inputs = ssl->inputs;
+
+    t_list *curr = inputs->next;
+    while (curr) {
+        t_input *input = (t_input*) curr->content;
+        if (input->filename) free(input->filename);
+        if (input->value) free(input->value);
+        free(input);
+    
+        t_list *tmp = curr->next;
+        free(curr);
+        curr = tmp;
+    }
+    free(inputs);
+}
+
 void free_commands() {
     size_t  index = 0;
 
@@ -12,6 +29,8 @@ void free_commands() {
 
 void free_exit() {
     free_commands();
+    free_inputs();
+    free(ssl->flags);
     free(ssl);
 }
 

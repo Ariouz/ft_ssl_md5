@@ -113,12 +113,20 @@ void    process_block(uint8_t *block, t_md5_state *state) {
     state->D += d;
 }
 
+void print_md5_digest(void* void_state) {
+    t_md5_state *state = void_state;
 
-int md5_hash(char *args) {
-    (void) args;
-    printf("%s\n", args);
+    uint8_t digest[16];
+    ft_memcpy(digest, &(state->A), 4);
+    ft_memcpy(digest + 4, &(state->B), 4);
+    ft_memcpy(digest + 8, &(state->C), 4);
+    ft_memcpy(digest + 12, &(state->D), 4);
 
-    // init md5 registers
+    for (int i = 0; i < 16; i++)
+        ft_printf("%02x", digest[i]);
+}
+
+int hash(t_input *input) {
     t_md5_state state = {
         .A = 0x67452301,
         .B = 0xefcdab89,
@@ -127,7 +135,7 @@ int md5_hash(char *args) {
     };
 
     size_t  padded_len = 0;
-    uint8_t *padded_msg = md5_pad((unsigned char*) args, ft_strlen(args), &padded_len);
+    uint8_t *padded_msg = md5_pad((unsigned char*) input->value, ft_strlen(input->value), &padded_len);
     
     size_t  offset = 0;
     while (offset < padded_len) {
@@ -136,17 +144,35 @@ int md5_hash(char *args) {
         offset += 64;
     }
 
-    uint8_t digest[16];
-    ft_memcpy(digest, &state.A, 4);
-    ft_memcpy(digest + 4, &state.B, 4);
-    ft_memcpy(digest + 8, &state.C, 4);
-    ft_memcpy(digest + 12, &state.D, 4);
+    if (input->type == SRC_STDIN)
+        print_stdin_digest(&state, input, print_md5_digest);
+    
+    if (input->type == SRC_SFLAG)
+        print_sflag_digest(&state, input, print_md5_digest);
 
-    for (int i = 0; i < 16; i++)
-        ft_printf("%02x", digest[i]);
-    ft_printf("\n");
+    if (input->type == SRC_FILE)
+        print_file_digest(&state, input, print_md5_digest);
 
     free(padded_msg);
+
+    return 0;
+}
+
+int md5_hash() {
+    t_list *inputs = ssl->inputs;
+
+    t_list *curr = inputs->next;
+
+    while (curr) {
+        t_input *input = (t_input *) curr->content;
+        if (input->type == SRC_FILE) {
+            if (read_file_to(input->value, &input->value) != ERROR_FATAL)
+                hash(input);
+        }
+        else hash(input);
+
+        curr = curr->next;
+    }
 
     return 0;
 }

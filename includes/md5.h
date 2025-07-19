@@ -11,7 +11,7 @@ typedef struct {
     uint32_t D;
 }   t_md5_state;
 
-int md5_hash(char *args);
+int md5_hash();
 
 
 #endif

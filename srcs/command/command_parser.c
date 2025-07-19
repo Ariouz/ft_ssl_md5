@@ -6,12 +6,12 @@ int parse_commands(int argc, char **argv) {
     t_ssl_command *command = get_command_by_name(argv[1]);
     if (!command) return fatal_print_help("Unknown command");
 
-    if (argc < 3) return fatal_error("Please provide a string to hash");
+    if (init_input_lst() == ERROR_FATAL) return ERROR_FATAL;
+    if (init_flags() == ERROR_FATAL) return ERROR_FATAL;
+    
+    if (parse_inputs(argc, argv, 2) == ERROR_FATAL) return ERROR_FATAL;
 
-    char *str_to_hash = argv[2];
-    // todo check argc > 3 =>>>> flags
-
-    command->execute(str_to_hash);
+    command->execute();
     return 0;
 }
 
