@@ -1,20 +1,20 @@
 # include "ft_ssl.h"
 
 void free_inputs() {
-    t_list *inputs = ssl->inputs;
-
-    t_list *curr = inputs->next;
+    t_list *curr = ssl->inputs;
     while (curr) {
-        t_input *input = (t_input*) curr->content;
-        if (input->filename) free(input->filename);
-        if (input->value) free(input->value);
-        free(input);
-    
+        t_input *input = (t_input *)curr->content;
+        if (input) {
+            if (input->filename) free(input->filename);
+            if (input->value) free(input->value);
+            free(input);
+        }
+
         t_list *tmp = curr->next;
         free(curr);
         curr = tmp;
     }
-    free(inputs);
+    ssl->inputs = NULL;
 }
 
 void free_commands() {
@@ -41,6 +41,11 @@ void clean_exit() {
 int fatal_error(char *msg) {
     ft_printf("ERROR: %s\n", msg);
     clean_exit();
+    return ERROR_FATAL;
+}
+
+int file_error(char *msg) {
+    ft_printf("ERROR: %s\n", msg);
     return ERROR_FATAL;
 }
 

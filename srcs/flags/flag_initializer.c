@@ -34,8 +34,6 @@ int add_input(int type, char *value) {
     else input->filename = NULL;
 
     ft_lstadd_back(&ssl->inputs, ft_lstnew(input));
-
-    ft_printf("add input with value %s and type %d\n", value, type);
     return 0;
 }
 

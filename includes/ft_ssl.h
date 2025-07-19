@@ -71,6 +71,7 @@ void    print_file_digest(void *state, t_input *input, void (*digest_function)(v
 t_ssl_command   *get_command_by_name(char *name);
 
 int    fatal_error(char *msg);
+int    file_error(char *msg);
 int    fatal_print_help(char *msg);
 int    initialize_commands();
 

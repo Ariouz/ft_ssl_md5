@@ -7,13 +7,13 @@ int read_file_to(char *src_file, char **dst) {
     size_t total_size = 0;
 
     int fd = open(src_file, O_RDONLY);
-    if (fd < 0) return fatal_error("Failed to open file");
+    if (fd < 0) return file_error("Failed to open file");
 
     while ((bytes_read = read(fd, buffer, BUFF_SIZE)) > 0) {
         char *new_result = malloc(total_size + bytes_read + 1);
         if (!new_result) {
             free(result);
-            return fatal_error("malloc failed in read_file_to");
+            return file_error("malloc failed in read_file_to");
         }
         if (result) {
             ft_memcpy(new_result, result, total_size);
@@ -25,7 +25,7 @@ int read_file_to(char *src_file, char **dst) {
         result = new_result;
     }
     if (!result)
-        return fatal_error("no input from file");
+        return file_error("no input from file");
 
 
     free(*dst);
