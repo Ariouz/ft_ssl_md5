@@ -1,6 +1,7 @@
 #include "ft_ssl.h"
 
 void    print_stdin_digest(void* state, t_input *input, void (*digest_function)(void *)) {
+    // doesn't print stdin if -p is not set and atleast 1 of file/-s is set
     if (ssl->flags->p == 0 && (ssl->has_f == true || ssl->has_s == true)) return ;
 
     if (ssl->flags->q == 1) {
@@ -14,7 +15,7 @@ void    print_stdin_digest(void* state, t_input *input, void (*digest_function)(
     ft_printf("\n");
 }
 
-void print_sflag_digest(void* state, t_input *input, void (*digest_function)(void *)) {
+void print_sflag_digest(void* state, t_input *input, void (*digest_function)(void *), char *prefix) {
     if (ssl->flags->q == 1) {
         digest_function(state);
         ft_printf("\n");
@@ -26,13 +27,13 @@ void print_sflag_digest(void* state, t_input *input, void (*digest_function)(voi
         return;
     }
 
-    ft_printf("MD5 (\"%s\") = ", input->value);
+    ft_printf("%s (\"%s\") = ", prefix, input->value);
     digest_function(state);
     ft_printf("\n");
 }
 
 
-void    print_file_digest(void* state, t_input *input, void (*digest_function)(void *)) {
+void    print_file_digest(void* state, t_input *input, void (*digest_function)(void *), char *prefix) {
     if (ssl->flags->q == 1) {
         digest_function(state);
         ft_printf("\n");
@@ -44,7 +45,7 @@ void    print_file_digest(void* state, t_input *input, void (*digest_function)(v
         return;
     }
 
-    ft_printf("MD5 (%s) = ", input->filename);
+    ft_printf("%s (%s) = ", prefix, input->filename);
     digest_function(state);
     ft_printf("\n");
 }

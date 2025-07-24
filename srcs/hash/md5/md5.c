@@ -126,7 +126,7 @@ void print_md5_digest(void* void_state) {
         ft_printf("%02x", digest[i]);
 }
 
-int hash(t_input *input) {
+static int hash(t_input *input) {
     t_md5_state state = {
         .A = 0x67452301,
         .B = 0xefcdab89,
@@ -148,10 +148,10 @@ int hash(t_input *input) {
         print_stdin_digest(&state, input, print_md5_digest);
     
     if (input->type == SRC_SFLAG)
-        print_sflag_digest(&state, input, print_md5_digest);
+        print_sflag_digest(&state, input, print_md5_digest, "MD5");
 
     if (input->type == SRC_FILE)
-        print_file_digest(&state, input, print_md5_digest);
+        print_file_digest(&state, input, print_md5_digest, "MD5");
 
     free(padded_msg);
 

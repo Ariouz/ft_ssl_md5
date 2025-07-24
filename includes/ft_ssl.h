@@ -65,8 +65,8 @@ int     init_input_lst();
 int     parse_inputs(int argc, char **argv, int start_index);
 
 void    print_stdin_digest(void *state, t_input *input, void (*digest_function)(void *));
-void    print_sflag_digest(void *state, t_input *input, void (*digest_function)(void *));
-void    print_file_digest(void *state, t_input *input, void (*digest_function)(void *));
+void    print_sflag_digest(void *state, t_input *input, void (*digest_function)(void *), char *prefix);
+void    print_file_digest(void *state, t_input *input, void (*digest_function)(void *), char *prefix);
 
 t_ssl_command   *get_command_by_name(char *name);
 

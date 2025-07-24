@@ -2,7 +2,7 @@
 # define MD5
 
 // rotate c bits from x to the left, the outside ones are moved to the right
-#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
+#define LEFTROTATE(x, c)    (((x) << (c)) | ((x) >> (32 - (c))))
 
 typedef struct {
     uint32_t A;
