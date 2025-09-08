@@ -61,9 +61,6 @@ int read_stdin() {
     if (!result)
         return 0;
 
-    size_t len = ft_strlen(result);
-    if (len > 0 && result[len - 1] == '\n')
-        result[len - 1] = '\0';
 
     add_input(SRC_STDIN, result);
     return 0;

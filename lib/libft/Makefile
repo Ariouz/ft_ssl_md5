@@ -20,8 +20,8 @@ CC= gcc -Wall -Wextra -Werror
 $(NAME): $(ALL_OBJS)
 	ar -rcs $(NAME) $(ALL_OBJS)
 
-bonus:
-	$(MAKE) BONUS=1
+#bonus:
+#	$(MAKE) BONUS=1
 
 all: $(NAME)
 
